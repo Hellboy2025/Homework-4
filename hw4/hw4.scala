@@ -6,6 +6,10 @@ object hw4 extends hwtest.hw("CS478"):
   // Fill in and sign the appropriate statement of assistance below
   // as described in DAAW Appendix B1
 
+  // I CERTIFY THAT I DID NOT USE ANY SOURCES OR RECEIVE ANY
+  // ASSISTANCE REQUIRING DOCUMENTATION WHILE COMPLETING
+  // THIS ASSIGNMENT.
+  //  Bryan Almeida Betancourt 
 
   ////////////////////////////////////////
   // PROBLEM 1
@@ -35,6 +39,7 @@ object hw4 extends hwtest.hw("CS478"):
         val (value,remaining) = helper(rest)
         (!(value),remaining)
       case Nil => null
+      case _ => null //  This helped get rid of a warning that the list match may not be exhaustive
 
     val result= helper(list = list)
     result._1
