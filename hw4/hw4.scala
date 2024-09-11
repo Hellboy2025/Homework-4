@@ -57,29 +57,19 @@ object hw4 extends hwtest.hw("CS478"):
         case'F' => Some((false,index+1))
         case '|'=> 
           for
-          (left_value,nextIndex) <- helper(index+1)
-          (right_value, finalIndex) <- helper(nextIndex)
-        yield (left_value || right_value, finalIndex+1)
+            const1<- helper(index+1)
+            const2<- helper(const1._2)
+          yield (const1._1 || const2._1, const2._2)
         case '&'=>
           for
-          (left_value,nextIndex) <- helper(index+1)
-          (right_value, finalIndex) <- helper(nextIndex)
-        yield(left_value && right_value, finalIndex+1)
+            const1<- helper(index+1)
+            const2<- helper(const1._2)
+          yield (const1._1 && const2._1, const2._2)
         case '!'=> 
           for
-          (value,nextIndex)<- helper(index+1)
-          yield(!(value),nextIndex+1)
+          const1 <- helper(index+1)
+          yield(!(const1._1),const1._2)
           // Invalid character
-        case'('  =>
-          for
-          (value1, nextIndex) <- helper(index + 1) // Parse the left side
-          operator = str(nextIndex)                    // Get the operator
-          (value2, finalIndex) <- helper(nextIndex + 1) // Parse the right side
-          if str(finalIndex) == ')'              // Ensure closing parenthesis
-        yield (operator match {
-          case '&' => value1 && value2 // Logical AND
-          case '|' => value1 || value2 // Logical OR
-        }, finalIndex + 1)              // Move past the closing parenthesis
         case _ => None
         
 
