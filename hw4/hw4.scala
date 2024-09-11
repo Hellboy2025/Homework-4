@@ -56,9 +56,10 @@ object hw4 extends hwtest.hw("CS478"):
         case'T'  => Some((true,index+1))
         case'F' => Some((false,index+1))
         case '|'=> 
-          val (left_value,nextIndex) <- helper(index+1)
-          val (right_value, finalIndex) <- helper(nextIndex)
-          return (left_value || right_value, finalIndex+1)
+          for
+          (left_value,nextIndex) <- helper(index+1)
+          (right_value, finalIndex) <- helper(nextIndex)
+        yield (left_value || right_value, finalIndex+1)
         case '&'=>
           for
           (left_value,nextIndex) <- helper(index+1)
