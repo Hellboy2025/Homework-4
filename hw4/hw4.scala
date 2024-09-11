@@ -12,11 +12,13 @@ object hw4 extends hwtest.hw("CS478"):
 
   def parse1(list: List[Char]): Boolean =
     // use a recursive helper function!
+    
     // Expr = 'T'
     //      | 'F'
     //      | '|' Expr Expr
     //      | '&' Expr Expr
     //      | '!' Expr
+
     def helper(list: List[Char]): (Boolean,List[Char]) =
       list match 
       case 'T':: rest => (true,rest)
@@ -32,16 +34,11 @@ object hw4 extends hwtest.hw("CS478"):
       case '!' :: rest => 
         val (value,remaining) = helper(rest)
         (!(value),remaining)
-      case Nil =>null
+      case Nil => null
 
-    val(result,_)= helper(list = list)
-    result
+    val result= helper(list = list)
+    result._1
   test("parse1", parse1, "list")
-
-  println(parse1(List('|', 'T', 'F'))) // should return true
-  println(parse1(List('&', 'T', 'F'))) // should return false
-  println(parse1(List('!', 'T')))      // should return false
-  println(parse1(List('|', '&', 'T', 'F', '!', 'F'))) // should return true
 
   ////////////////////////////////////////
   // PROBLEM 2
@@ -69,18 +66,18 @@ object hw4 extends hwtest.hw("CS478"):
           for
           const1 <- helper(index+1)
           yield(!(const1._1),const1._2)
-          // Invalid character
-        case _ => None
+          
+        case _ => None // Invalid syntax
         
 
         
-              
+
+    helper(0) match
+      case Some(value) => if value._2 == str.length() then Some(value._1) 
+                          else None  
+      case None => None
     
-    helper(0).flatMap {
-    case (result, finalIndex) =>
-      if (finalIndex == str.length) Some(result) // Return result if parsing complete
-      else None // Return None if extra characters are present
-    }
+    
 
 
   test("parse2", parse2, "str")
